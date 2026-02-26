@@ -1,0 +1,6 @@
+from django.shortcuts import render
+from .models import News
+
+def news_view(request):
+    newss = News.objects.order_by('-date')
+    return render(request, 'news.html', {'newss': newss})

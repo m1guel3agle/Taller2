@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 text-center">
+    <h2>Movies Statistics</h2>
+
+    <img src="{% url 'movies_by_year_chart' %}" class="img-fluid mt-4">
+</div>
+
+{% endblock content %}

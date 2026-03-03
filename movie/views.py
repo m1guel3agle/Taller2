@@ -3,7 +3,27 @@ from django.http import HttpResponse
 from .models import Movie
 from collections import Counter
 import matplotlib
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
 
+
+def login_view(request):
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
+            return render(request, "login.html", {
+                "error": "Invalid username or password"
+            })
+
+    return render(request, "login.html")
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -47,3 +67,13 @@ def movies_by_year_chart(request):
     plt.close()
 
     return response
+
+
+def signup(request):
+    email = request.GET.get('email')
+    return render(request, 'signup.html', {
+        'email': email
+    })
+    
+def statistics_page(request):
+    return render(request, 'statistics.html')
